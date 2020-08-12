@@ -1,9 +1,9 @@
-from flask import Flask, send_from_directory
-app= Flask(__name__, template_folder="./")
+from flask import Flask, render_template
+app= Flask(__name__, template_folder="templates")
 
 @app.route('/')
 def index():
-	return send_from_directory('./', 'index.html')
+	return render_template('index.html')
 
 if __name__ == '__main__':
-	app.run(threaded=True, port=33507)
+	app.run()
