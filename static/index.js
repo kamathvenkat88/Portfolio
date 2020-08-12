@@ -1,7 +1,7 @@
 let nav = document.getElementById('nav');
 let navTop = nav.offsetTop;
 
-audio = new Audio('../static/r u gonna be my girl.mp3');
+audio = new Audio('./r u gonna be my girl.mp3');
 function play(){
 	if(!audio.paused)
 		audio.pause();
