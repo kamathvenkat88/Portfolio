@@ -7,8 +7,8 @@
 	<meta HTTP-EQUIV="EXPIRES" CONTENT="Mon, 22 Jul 2002 11:12:01 GMT">
 	<title>Portfolio</title>
 	<!--linking static files to html-->
-	<link rel="stylesheet" type="text/css" href="static/css/style.css">
-	<link rel="shortcut icon" href="static/images/resume.png">
+	<link rel="stylesheet" type="text/css" href="/static/css/style.css">
+	<link rel="shortcut icon" href="/static/images/resume.png">
 </head>
 <body>
 	<!--landing Page-->
@@ -144,7 +144,6 @@
 	<div class="navBar" id="nav">
 		<a class="tab lasttab" href="#about" onclick="active(this, 'about')">About</a>
 		<a class="tab" href="#blog" onclick="active(this, 'blog')">Blog</a`>
-		<a class="tab">Experience</a>
 		<a class="tab">Projects</a>
 		<a class="tab">Reach-out</a>
 		<a class="tab">Skills</a>
@@ -405,7 +404,11 @@
 							<p><small class="date">{{blogs[i]['date']}}</small>  <small>{{blogs[i]['time']}} mins read</small></p>
 						</div>
 						<div class="vertical-center">
-							<img src="{{blogs[i]['image']}}">
+							{% if blogs[i]['image'] == '' %}
+						        <img src="/static/images/blog.jpg">
+						    {% else %}
+						    	<img src="{{blogs[i]['image']}}">
+						    {% endif %}
 						</div>
 					</a>
 				{% endfor %}

@@ -1,39 +1,41 @@
 from flask import Flask, render_template, request #flask is a module F is a class, from Module import Class
-from pymongo import MongoClient
-import ssl
-import requests
-from bs4 import BeautifulSoup
+from pymongo import MongoClient #Pyongo, Module to connect to DB (MongoClient)
+import ssl #imports empty certificate for MongoDb connection.
+import requests #to get response for scraping
+from bs4 import BeautifulSoup #Html parser for scraping
 
-app= Flask(__name__, template_folder="templates")
+app= Flask(__name__, template_folder="templates") #creates a Flask application which sets the template folder to templates
 
 client = MongoClient('mongodb+srv://kamathVenkat:7N1eXZCat17dK9fE@cluster0.qd9tw.mongodb.net/kamathsBlog?retryWrites=true&w=majority&ssl=true', ssl_cert_reqs=ssl.CERT_NONE)
-db = client.get_database('kamathsBlog')
-collection = db.Blogs
-def imgSize(url, data):
-	if url:
-		if url[0] == '/':
-			url = data + url
-		if url[0:4] == 'data':
-			return '', 0
-		if url[0:4] != 'http':
-			url = 'https://'+url
-		return url, len(requests.get(url).content)
-	return '', 0
+#connecting client to the MongoDB Cluster
+db = client.get_database('kamathsBlog') #accessing database from cluster
+collection = db.Blogs #accessing collection blogs from the Database
 
-def readTime(soup):
-	ps = soup.findAll('p')
-	text = ' '.join([p.text for p in ps])
-	return str(round((len(text.split(' ')) * 300)/60000))
+def imgSize(url, data): #A function defined to get image size
+	if url: #if URL is not none
+		if url[0] == '/': #Check if the URL is relative to the current website
+			url = data + url #If relative prepend current website
+		if url[0:4] == 'data': #check if URL is the data URL 
+			return '', 0 #hard to parse so. therefore return 0
+		if url[0:4] != 'http': #check if the first 4 letter are Http
+			url = 'https://'+url #prepent https:// if first three letters are not HTP
+		return url, len(requests.get(url).content) #return URL and size  of image
+	return '', 0 #return 0 if URL is none
 
-@app.route('/')
-def index():
-	list_docs = []
-	for document in collection.find({}, {'_id': 0}):
-		list_docs.append(document)
-	list_docs.reverse()
-	return render_template('index.html', blogs = list_docs, len_blogs = len(list_docs))
+def readTime(soup): #time required to read the article: Soup is parsed HTML data
+	ps = soup.findAll('p') #searching for all P tags
+	text = ' '.join([p.text for p in ps]) #collecting all the texts from P tags
+	return str(round((len(text.split(' ')) * 300)/60000)) #reading words and appropriate tie to eachword
 
-@app.route('/addBlog', methods=['POST'])
+@app.route('/') #creating a route for the application which starts with "/"
+def index(): #The function is run whenever the above route is encountered
+	list_docs = [] #creating an empty array
+	for document in collection.find({}, {'_id': 0}):#collection.find accesses document from database
+		list_docs.append(document) 
+	list_docs.reverse() #re-orders the blogs
+	return render_template('index.html', blogs = list_docs, len_blogs = len(list_docs)) #renders template index.html with the blogs
+
+@app.route('/addBlog', methods=['POST']) #addBlog route on post request
 def login_request():
 	username = request.form['userName'];
 	password = request.form['password'];
@@ -42,9 +44,9 @@ def login_request():
 	else:
 		return render_template('login.html')
 
-@app.route('/addBlog')
+@app.route('/addBlog') #addBlog route on get request 
 def login():
-	return render_template('login.html')
+	return render_template('login.html') #render the template login.html
 
 @app.route('/scrapeBlog', methods=['POST'])
 def scrapBlog():
@@ -77,7 +79,7 @@ def scrapBlog():
 
 	#image
 	img_tags = soup.findAll("img")
-	img = [img_tags[0], 0]
+	img = ['', 0]
 	for img_tag in img_tags:
 		img_url, size = imgSize(img_tag.get('src'), url)
 		if size > img[1]:
