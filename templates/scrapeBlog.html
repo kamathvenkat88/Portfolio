@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>Scrape</title>
+	<link rel="stylesheet" type="text/css" href="./static/css/login.css">
+</head>
+<body>
+	<div class="login">
+		<form method="POST" action="/postBlog" onsubmit="disable()">
+			<div style="width: 90%;">
+				<label> Heading: </label>
+				<textarea name="head" rows="5" style="width: 95%; padding: 10px;">{{blog['head']}}</textarea>  
+			</div>
+			<div class="inputField" style="width: 90%;">
+				<label>Date: </label>
+				<input type="text" name="date" value="{{blog['date']}}" style="width: 95%; padding: 10px;">
+			</div>
+			<div class="inputField" style="width: 90%;">
+				<label>Author: </label>
+				<input type="text" name="author" value="{{blog['author']}}" style="width: 95%; padding: 10px;">
+			</div>
+			<div class="inputField" style="width: 90%;">
+				<label>Image: </label>
+				<input type="text" name="image" value="{{blog['image']}}" style="width: 95%; padding: 10px;">
+			</div>
+			<img src="{{blog['image']}}" style="width: 80%; height: auto; object-fit: cover; margin-bottom: 20px;" >
+			<div style="width: 90%;">
+				<label>Para: </label>
+				<textarea name="para" rows="5" style="width: 95%; padding: 10px;">{{blog['para']}}</textarea>
+			</div>
+			<div class="inputField" style="width: 90%;">
+				<label>Time: </label>
+				<input type="text" name="time" value={{blog['time']}} style="width: 95%; padding: 10px;">
+			</div>
+			<div class="inputField" style="width: 90%;">
+				<label>Url: </label>
+				<input type="text" name="url" value={{blog['url']}} style="width: 95%; padding: 10px;">
+			</div>
+
+			<input type="submit" name="submit" id="submit">
+		</form>
+	</div>
+	<script type="text/javascript">
+		function disable(){
+			document.getElementById('submit').disabled = 'true';
+		}
+	</script>
+</body>
+</html>

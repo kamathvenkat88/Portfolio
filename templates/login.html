@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>Login</title>
+	<link rel="stylesheet" type="text/css" href="./static/css/login.css">
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.16.0/js/md5.min.js"></script>
+</head>
+<body>
+	<div class="login">
+		<form method="POST" onsubmit="mask(this)">
+			<div class="inputField">
+				<label>Username: </label>
+				<input type="text" name="userName" required="true"/>
+			</div>
+			<div class="inputField">
+				<label>Password: </label>
+				<input type="password" name="password" required="true"/>
+			</div>
+			<input type="submit" name="submit">
+		</form>
+	</div>
+	<script type="text/javascript">
+		function mask(form) {
+			form.password.value = md5(form.password.value);
+			return true;	  
+		}
+	</script>
+</body>
+</html>

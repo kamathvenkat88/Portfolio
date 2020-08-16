@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>Login</title>
+	<link rel="stylesheet" type="text/css" href="./static/css/login.css">
+</head>
+<body>
+	<div class="login">
+		<form method="POST" action="/scrapeBlog" onsubmit="disable()">
+			<div style="width: 90%;">
+				<label>Blog Link: </label>
+				<textarea name="blogLink" required="true" rows="5" style="width: 95%; padding: 10px;"></textarea>
+			</div>
+			<input type="submit" name="submit" id="submit">
+		</form>
+	</div>
+	<script type="text/javascript">
+		function disable(){
+			document.getElementById('submit').disabled = 'true';
+		}
+	</script>
+</body>
+</html>
