@@ -143,10 +143,10 @@
 	<!-- Nav bar -->
 	<div class="navBar" id="nav">
 		<a class="tab lasttab" href="#about" onclick="active(this, 'about')">About</a>
-		<a class="tab" href="#blog" onclick="active(this, 'blog')">Blog</a`>
-		<a class="tab">Projects</a>
-		<a class="tab">Reach-out</a>
-		<a class="tab">Skills</a>
+		<a class="tab" href="#blog" onclick="active(this, 'blog')">Blog</a>
+		<a class="tab">Projects &amp; Skills</a>
+		<a class="tab" href="#reach-out" onclick="active(this, 'reach-out')">Reach-out</a> 
+
 		<a class="tab">Travel</a>
 	</div>
 
@@ -412,6 +412,20 @@
 						</div>
 					</a>
 				{% endfor %}
+			</section>
+			<section id="reach-out" class="hide" style="padding: 0;">
+				<div class="wrapper">
+					<div class="background"></div>
+					<div class="vertical-center">
+						<a class="contact-card" style="background-image: url('/static/images/git.png');"></a>
+					</div>
+					<div class="vertical-center">
+						<div class="contact-card" style="background-image: url('/static/images/gmail.webp');"></div>
+					</div>
+					<div class="vertical-center">
+						<div class="contact-card" style="background-image: url('/static/images/linkedin.png');"></div>
+					</div>
+				</div>
 			</section>
 	</section>
 	

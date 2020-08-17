@@ -153,10 +153,13 @@ body{
 	display: block;
 }
 
-#about{
+#main section{
 	padding-top: 60px;
-	background-color: rgb(220,220,220);
 	padding-bottom: 60px;  
+}
+
+#about{
+	background-color: rgb(220,220,220);
 }
 
 
@@ -425,9 +428,7 @@ body{
 }
 
 #blog{
-	padding-top: 60px;
 	background-color: #fcfcfc;
-	padding-bottom: 60px;  
 }
 .article{
 	width: 60vw;
@@ -499,3 +500,55 @@ body{
 	border-radius: 50%;
 	background-color: black;
 }
+
+
+#reach-out{
+	height: calc(100vh - 40px);
+	pointer-events: none;	
+}
+
+#reach-out .vertical-center{
+	height: 100%;
+	margin: 20px;
+}
+
+.wrapper{
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.background {
+  background-image: url('../images/reachout.jpg');
+  background-size: cover;
+  background-position: center;
+  position: absolute;
+  transition: 1s;
+  width: 100%;
+  z-index: -1;
+  height: 100%;
+}
+
+.contact-card{
+	height: 150px;
+	width: 150px;
+	border-radius: 50%;
+	background-color: none;
+	background-size: contain;
+	background-position: center;
+	transition: 1s;
+	pointer-events: auto;
+}
+.contact-card img{
+	height: 100%;
+	width: 100%;
+}
+#reach-out:hover .background{
+	filter: blur(2px) grayscale(20%);
+}
+
+
+
+
