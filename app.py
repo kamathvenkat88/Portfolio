@@ -1,15 +1,23 @@
-from flask import Flask, render_template, request #flask is a module F is a class, from Module import Class
+from flask import Flask, render_template, request, redirect, url_for #flask is a module F is a class, from Module import Class
 from pymongo import MongoClient #Pyongo, Module to connect to DB (MongoClient)
 import ssl #imports empty certificate for MongoDb connection.
 import requests #to get response for scraping
 from bs4 import BeautifulSoup #Html parser for scraping
+import random
 
 app= Flask(__name__, template_folder="templates") #creates a Flask application which sets the template folder to templates
 
 client = MongoClient('mongodb+srv://kamathVenkat:7N1eXZCat17dK9fE@cluster0.qd9tw.mongodb.net/kamathsBlog?retryWrites=true&w=majority&ssl=true', ssl_cert_reqs=ssl.CERT_NONE)
 #connecting client to the MongoDB Cluster
 db = client.get_database('kamathsBlog') #accessing database from cluster
-collection = db.Blogs #accessing collection blogs from the Database
+ #accessing collection blogs from the Database
+
+def getTravelBlogs():
+	collection=db.travelBlog
+	list_blogs = []
+	for document in collection.find({},{"place":1, "year":1}):
+		list_blogs.append(document['place']+'-'+document['year'])
+	return list_blogs
 
 def imgSize(url, data): #A function defined to get image size
 	if url: #if URL is not none
@@ -22,6 +30,17 @@ def imgSize(url, data): #A function defined to get image size
 		return url, len(requests.get(url).content) #return URL and size  of image
 	return '', 0 #return 0 if URL is none
 
+def random_image(collection, index):
+	cursor = collection.find({'key': index})
+	count = cursor.count()
+	skip_num = 0
+	if count > 1:
+		skip_num = random.randrange(count-1)
+	
+	for image in cursor.skip(skip_num).limit(1):
+		return image['image']
+
+
 def readTime(soup): #time required to read the article: Soup is parsed HTML data
 	ps = soup.findAll('p') #searching for all P tags
 	text = ' '.join([p.text for p in ps]) #collecting all the texts from P tags
@@ -29,18 +48,25 @@ def readTime(soup): #time required to read the article: Soup is parsed HTML data
 
 @app.route('/') #creating a route for the application which starts with "/"
 def index(): #The function is run whenever the above route is encountered
-	list_docs = [] #creating an empty array
+	list_blogs = [] #creating an empty array
+	collection = db.Blogs
 	for document in collection.find({}, {'_id': 0}):#collection.find accesses document from database
-		list_docs.append(document) 
-	list_docs.reverse() #re-orders the blogs
-	return render_template('index.html', blogs = list_docs, len_blogs = len(list_docs)) #renders template index.html with the blogs
+		list_blogs.append(document) 
+	list_blogs.reverse() #re-orders the blogs
+	titles = getTravelBlogs()
+	images = []
+	collection = db.travelImages
+	for title in titles:
+		images.append(random_image(collection, title))
+	return render_template('index.html', blogs = list_blogs, len_blogs = len(list_blogs), images = images, titles = titles, len_images = len(images)) #renders template index.html with the blogs
 
 @app.route('/addBlog', methods=['POST']) #addBlog route on post request
 def login_request():
 	username = request.form['userName'];
 	password = request.form['password'];
 	if username == 'Venkat' and password == 'e0b0ef49a5d6a47abaa2c628718ed00b':
-		return render_template('addBlog.html')
+		travelBlogs = getTravelBlogs()
+		return render_template('addBlog.html', travelBlogs = travelBlogs, len_travelBlogs = len(travelBlogs))
 	else:
 		return render_template('login.html')
 
@@ -91,9 +117,9 @@ def scrapBlog():
 	time = soup.findAll('time')
 	month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 	if time:
-		if time[0]['datetime'].strip() != '':
-			date = time[0]['datetime'].split('-')
-			blog['date'] = month[int(date[1])-1] + ' ' + date[0]
+		print(time)
+		if time[0].text.strip() != '':
+			blog['date'] = time[0].text #month[int(date[1])-1] + ' ' + date[0]
 
 	time = soup.findAll("meta", {'property': 'article:published_time'})
 	if time:
@@ -119,6 +145,7 @@ def scrapBlog():
 @app.route('/postBlog', methods=['POST'])
 def postBlog():
 	blog = {}
+	collection = db.Blogs
 	blog['url'] = request.form['url']
 	blog['head'] = request.form['head']
 	blog['image'] = request.form['image']
@@ -128,7 +155,33 @@ def postBlog():
 	blog['time'] = request.form['time']
 	status = collection.insert_one(blog)
 	if status: 
-		return render_template('addBlog.html')
+		return redirect('/addBlog')
+	return "failure"
+
+@app.route('/postTravelBlog', methods=['POST'])
+def postTravelBlog():
+	blog = {}
+	collection = db.travelBlog
+	blog['place'] = request.form['place']
+	blog['year'] = request.form['year']
+	blog['head'] = request.form['head']
+	blog['blog'] = request.form['blog']
+	blog['foot'] = request.form['foot']
+	status = collection.insert_one(blog)
+	if status: 
+		return redirect('/addBlog')
+	return "failure"
+
+@app.route('/postTravelImage', methods=['POST'])
+def postTravelImage():
+	blog = {}
+	collection = db.travelImages
+	blog['key'] = request.form['key']
+	blog['image'] = request.form['image']
+	status = collection.insert_one(blog)
+	if status: 
+		travelBlogs = getTravelBlogs()
+		return redirect('/addBlog')
 	return "failure"
 
 @app.route('/getBlog')

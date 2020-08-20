@@ -8,6 +8,8 @@
 	<title>Portfolio</title>
 	<!--linking static files to html-->
 	<link rel="stylesheet" type="text/css" href="/static/css/style.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/mobile.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/konpa/devicon@master/devicon.min.css">
 	<link rel="shortcut icon" href="/static/images/resume.png">
 </head>
 <body>
@@ -16,14 +18,14 @@
 		<!--50% background part-->
 		<div class="part1">
 		    <!--Child 1: The subject I am Venkat Kamath, Child 2: Product and toggle-->	
-			<div class= "padding" style="margin-left: -70vw; padding-left: 30vw;">
+			<div class="div1 padding" style="">
 				<div class="text main"><span style="color: black;">I am</span><br>Venkat Kamath</div>
 				<div class="text">
 					<div class="title">Product </div><div class="title" id="title2" style="text-align: left;"></div>
 				</div>
 			</div>
 			<!-- hello SVG-->
-			<div class= "padding" style="padding-left: 30vw;">
+			<div class= "div2 padding">
 				<svg class="hello" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewbox="0 0 640 150" style="background-color: none;">
 					<g transform="translate(0, 0)">
 						<line x1="17" y1="0" x2="17" y2="0" stroke="#000" stroke-width="35">
@@ -146,8 +148,7 @@
 		<a class="tab" href="#blog" onclick="active(this, 'blog')">Blog</a>
 		<a class="tab">Projects &amp; Skills</a>
 		<a class="tab" href="#reach-out" onclick="active(this, 'reach-out')">Reach-out</a> 
-
-		<a class="tab">Travel</a>
+		<a class="tab" href="#travel" onclick="active(this, 'travel')">Travel</a>
 	</div>
 
 	<div class="back">
@@ -405,9 +406,9 @@
 						</div>
 						<div class="vertical-center">
 							{% if blogs[i]['image'] == '' %}
-						        <img src="/static/images/blog.jpg">
+						        <img class="center" src="/static/images/blog.jpg">
 						    {% else %}
-						    	<img src="{{blogs[i]['image']}}">
+						    	<img class="center" src="{{blogs[i]['image']}}">
 						    {% endif %}
 						</div>
 					</a>
@@ -417,14 +418,43 @@
 				<div class="wrapper">
 					<div class="background"></div>
 					<div class="vertical-center">
-						<a class="contact-card" style="background-image: url('/static/images/git.png');"></a>
+						<a href="https://github.com/kamathvenkat88/" target="_blank" class="contact-card" style=" 
+						border-color: #171515;">
+							<div class="vertical-center" style="margin: 0;">
+								<i class="devicon-github-plain colored"></i>
+							</div>
+						</a>
 					</div>
 					<div class="vertical-center">
-						<div class="contact-card" style="background-image: url('/static/images/gmail.webp');"></div>
+						<a href="https://mail.google.com/mail/?view=cm&fs=1&to=kamath.venkat@gmail.com"  target="_blank" class="contact-card" style=" font-size: 110px;
+						border-color: #171515;">
+							<div class="vertical-center" style="margin: 0;">
+								<i class="devicon-google-plain colored"></i>
+							</div>
+						</a>
 					</div>
 					<div class="vertical-center">
-						<div class="contact-card" style="background-image: url('/static/images/linkedin.png');"></div>
+						<a href="https://www.linkedin.com/in/kamathvenkatray"  target="_blank" class="contact-card" style=" 
+						border-color: #171515; font-size: 90px;">
+							<div class="vertical-center" style="margin: 0;">
+								<i class="devicon-linkedin-plain colored"></i>
+							</div>
+						</a>
 					</div>
+				</div>
+			</section>
+			<section id="travel" class="hide">
+				<!--<img src="https://drive.google.com/thumbnail?id=0B6kEvBgY2eJfdmlMR1NtcWxJTFk">-->
+				<div class="wrapper">
+					{% for i in range(len_images) %}
+						<div class="travel-card">
+							<div class="inner-card" style="background-image: url({{images[i]}});">
+							</div>
+							<div class="foreground">
+								<p>{{titles[i]}}</p>
+							</div>
+						</div>
+					{% endfor %}
 				</div>
 			</section>
 	</section>

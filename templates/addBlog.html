@@ -7,11 +7,71 @@
 	<link rel="stylesheet" type="text/css" href="./static/css/login.css">
 </head>
 <body>
+
+
 	<div class="login">
+		<h3>Blogs</h3>
 		<form method="POST" action="/scrapeBlog" onsubmit="disable()">
 			<div style="width: 90%;">
 				<label>Blog Link: </label>
 				<textarea name="blogLink" required="true" rows="5" style="width: 95%; padding: 10px;"></textarea>
+			</div>
+			<input type="submit" name="submit" id="submit">
+		</form>
+	</div>
+	
+
+
+	<div class="login">
+		<h3>Travel Blogs</h3>
+		<form method="POST" action="/postTravelBlog" onsubmit="disable()">
+			<div style="width: 90%;">
+				<label>Place of Visit: </label>
+				<input type="text"  name="place" required="true" style="width: 95%; padding: 10px;"></textarea>
+			</div>
+			<br>
+			<div style="width: 90%;">
+				<label>Time of Visit: </label>
+				<input type="number"  name="year" required="true" style="width: 95%; padding: 10px;"></textarea>
+			</div>
+			<br>
+			<div style="width: 90%;">
+				<label>Heading: </label>
+				<input type="text"  name="head" required="true" style="width: 95%; padding: 10px;"></textarea>
+			</div>
+			<br>
+			<div style="width: 90%;">
+				<label>Blog</label>
+				<textarea name="blog" required="true" rows="30" style="width: 95%; padding: 10px;"></textarea>
+			</div>
+			<div style="width: 90%;">
+				<label>Footer: </label>
+				<input type="text"  name="foot" required="true" style="width: 95%; padding: 10px;"></textarea>
+			</div>
+			<br>
+			<input type="submit" name="submit" id="submit">
+		</form>
+	</div>
+	
+
+
+
+	<div class="login">
+		<h3>Travel Images</h3>
+		<form method="POST" action="/postTravelImage" onsubmit="disable()">
+			<div style="width: 90%;">
+				<label>Foreign key: </label>
+				<select name="key" required="true" style="width: 95%; padding: 10px;">
+					<option>-</option>
+					{% for i in range(len_travelBlogs) %}
+						<option value="{{travelBlogs[i]}}">{{travelBlogs[i]}}</option>
+					{% endfor %}
+				</select>
+			</div>
+			<br>
+			<div style="width: 90%;">
+				<label>Image Link: </label>
+				<textarea name="image" required="true" rows="5" style="width: 95%; padding: 10px;"></textarea>
 			</div>
 			<input type="submit" name="submit" id="submit">
 		</form>

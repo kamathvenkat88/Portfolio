@@ -1,0 +1,35 @@
+@media only screen and (min-width: 767px) {
+	.div1{
+		margin-left: -70vw; 
+		padding-left: 30vw;
+	}
+
+	.div2{
+		padding-left: 30vw;
+	}
+	.text {
+		font-size: 2em;
+	}
+	.main {
+		font-size: 3.5em;
+	}
+	.main, .hello{
+		width: 40vw;
+	}
+	.title{ 
+		width: 140px;
+	}
+	.article{
+		display: flex;
+	}
+	.article div:nth-child(1){
+		width: 70%;
+	}
+
+	.article div:nth-child(2){
+		width: 30%;
+	}
+	.timeline::after{
+		left: calc(50% - 2.5px);
+	}
+}
