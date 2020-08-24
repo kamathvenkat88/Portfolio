@@ -35,7 +35,7 @@ def random_image(collection, index):
 	count = cursor.count()
 	skip_num = 0
 	if count > 1:
-		skip_num = random.randrange(count-1)
+		skip_num = random.randrange(count)
 	
 	for image in cursor.skip(skip_num).limit(1):
 		return image['image']

@@ -145,6 +145,7 @@ body{
 	/*background-color: #fcfcfc;*/
 	color: black;
 	font-weight: bolder;
+	transition: 0.1s;
 }
 
 .active{
@@ -627,4 +628,45 @@ body{
 	background-size: 120%;
 }
 
+#projects{
+	position: relative;
+	max-height: 80vh;
+	overflow: hidden;
+	background-image: url('/static/images/skills.svg');
+	background-repeat: no-repeat;
+}
 
+.skill-holder{
+	overflow-x: hidden;
+	overflow-y: auto;
+	position: relative;
+	height: 80vh;
+	width: 60vw;
+	margin-left: 30vw;
+	padding-bottom: 40px;
+
+}
+
+.skill-holder::-webkit-scrollbar{
+	width: 0;
+}
+.center{
+	display: block;
+	margin: 0 auto;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #EEF5F9; 
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2F3129; 
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #272822; 
+}

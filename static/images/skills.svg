@@ -1,0 +1,9 @@
+<svg class="skill" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" style="background-color: none;">
+	<g transform="rotate(90) translate(10, -10)">
+		<text x="0" y="0" class="font" font-size="35" font-family="Playfair Display,sans-serif;">Skills</text>
+		<circle class="line" cx="85" cy="-5" r="0" fill="#000"> 
+			<animate dur="0.5s" begin="0.1s" attributeName="r" values="0; 1; 4" keyTimes="0; 0.6; 1" keySplines="1, 0, 0, 1" fill="freeze"></animate>
+			<animate dur="1s" begin="0.1s" attributeName="fill" values="#000; #D0B1A7; #93401F" keyTimes="0; 0.6; 1" keySplines="1, 0, 0, 1" repeatCount="indefinite"></animate>
+		</circle>
+	</g>
+</svg>
